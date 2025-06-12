@@ -26,6 +26,13 @@ jobs:
           if [ ! -f _worker.js.backup ]; then
             echo "备份文件 _worker.js.backup 不存在，正在创建..."
             cp _worker.js _worker.js.backup
+            
+            # 提交并推送备份文件
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add _worker.js.backup
+            git commit -m "创建 _worker.js 的备份文件"
+            git push origin ${{ github.ref }}
           fi
 
       - name: 混淆代码
